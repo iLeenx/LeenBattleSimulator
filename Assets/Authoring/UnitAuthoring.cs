@@ -12,6 +12,8 @@ public class UnitAuthoring : MonoBehaviour
     public float AttackRange = 1.5f;
     public float MoveSpeed = 2f;
     public int GridIndex = 0;
+    public int UniqueId = 0;
+
 
     class Baker : Baker<UnitAuthoring>
     {
@@ -28,6 +30,8 @@ public class UnitAuthoring : MonoBehaviour
             AddComponent(entity, new Target { Entity = Entity.Null });
             AddComponent(entity, new AttackTimer { Time = 0f });
             AddComponent(entity, new GridSlot { Index = authoring.GridIndex });
+            AddComponent(entity, new UnitId { Value = authoring.UniqueId });
+
 
             //AddComponentObject(entity, authoring.GetComponent<HPDisplay>());
 
