@@ -2,6 +2,9 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 
+// moves units toward their target
+// AttackSystem handle damage
+
 public partial struct MovementSystem : ISystem
 {
     public void OnUpdate(ref SystemState state)
@@ -28,6 +31,7 @@ public partial struct MovementSystem : ISystem
                 targetTransform.Position - transform.ValueRW.Position
             );
 
+            // read target position and move toward it
             float distance = math.distance(
                 transform.ValueRW.Position,
                 targetTransform.Position

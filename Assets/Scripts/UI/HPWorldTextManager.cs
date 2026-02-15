@@ -6,12 +6,15 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
+// simple visual UI for HP above each unit
+
+
 public class HPWorldTextManager : MonoBehaviour
 {
     [Header("Text look")]
     public TMP_FontAsset font;
     public float height = 2.0f;
-    public float fontSize = 3.5f;   // 3D TMP units (not UI font size)
+    public float fontSize = 3.5f;
     public float scale = 0.2f;
 
     EntityManager em;
@@ -66,7 +69,7 @@ public class HPWorldTextManager : MonoBehaviour
             }
         }
 
-        // cleanup: remove texts for entities that no longer exist
+        // remove texts for entities that no longer exist
         var toRemove = new List<Entity>();
         foreach (var kvp in texts)
         {

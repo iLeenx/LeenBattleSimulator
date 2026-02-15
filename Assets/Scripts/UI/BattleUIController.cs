@@ -3,6 +3,9 @@ using Unity.Entities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// shows win panel in battle scene.
+// WinSystem calls ShowWinner(teamTag).
+
 public class BattleUIController : MonoBehaviour
 {
     public GameObject panel;
@@ -21,17 +24,6 @@ public class BattleUIController : MonoBehaviour
         }
     }
 
-    //public void ShowWinner(int teamId)
-    //{
-    //    if (panel != null) panel.SetActive(true);
-
-    //    // team 0 = white/player, team 1 = red/enemy 
-    //    if (winnerText != null)
-    //        //winnerText.text = teamId == 0 ? "TEAM 0 WINS!" : "TEAM 1 WINS!";
-    //        winnerText.text = $"Team {teamId} WINS!";
-
-    //}
-
     public void ShowWinner(int winningTeamTag)
     {
         panel.SetActive(true);
@@ -44,7 +36,7 @@ public class BattleUIController : MonoBehaviour
         }
         else
         {
-            displayTeamId = SelectedTeam.EnemyTeamId; // enemy preset id from config
+            displayTeamId = SelectedTeam.EnemyTeamId; // enemy id from config file
         }
 
         winnerText.text = $"Team {displayTeamId} WINS!";

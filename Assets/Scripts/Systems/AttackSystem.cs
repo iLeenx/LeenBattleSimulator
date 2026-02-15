@@ -2,6 +2,12 @@ using Unity.Entities;
 using Unity.Collections;
 using Unity.Mathematics;
 
+// deals damage over time
+// when HP reaches 0 IsDead
+
+// ECB = Entity Command Buffer
+// ECB is a safe way to change entities (add/remove/destroy components) without breaking ECS while it’s running
+
 [UpdateInGroup(typeof(SimulationSystemGroup))]
 public partial class AttackSystem : SystemBase
 {
@@ -42,7 +48,7 @@ public partial class AttackSystem : SystemBase
 
                 if (!em.Exists(target.Entity))
                 {
-                    // target no longer exists; clear and continue
+                    // target no longer exists -> clear and continue
                     timer.Time = 0f;
                     em.SetComponentData(attacker, timer);
                     continue;
@@ -55,7 +61,7 @@ public partial class AttackSystem : SystemBase
                     continue;
                 }
 
-                // perform attack
+                // attack
                 timer.Time = 0f;
                 em.SetComponentData(attacker, timer);
 

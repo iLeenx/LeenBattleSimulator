@@ -3,8 +3,14 @@ using Unity.Transforms;
 using Unity.Mathematics;
 using UnityEngine;
 
+// this is the transforms GameObject to Entity ECS
+// this on the Unit prefab
+// baker runs when the SubScene bakes and creates an entity with all the components
+
 public class UnitAuthoring : MonoBehaviour
 {
+    // values becomes like a component in run 
+
     public int TeamId = 0;
     public float MaxHP = 100f;
     public float Attack = 10f;
@@ -21,6 +27,7 @@ public class UnitAuthoring : MonoBehaviour
         {
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
+            // add all gameplay data as components
             AddComponent(entity, new TeamTag { Value = authoring.TeamId });
             AddComponent(entity, new HP { Value = authoring.MaxHP, Max = authoring.MaxHP });
             AddComponent(entity, new AttackStat { Value = authoring.Attack });
@@ -32,8 +39,6 @@ public class UnitAuthoring : MonoBehaviour
             AddComponent(entity, new GridSlot { Index = authoring.GridIndex });
             AddComponent(entity, new UnitId { Value = authoring.UniqueId });
 
-
-            //AddComponentObject(entity, authoring.GetComponent<HPDisplay>());
 
             var display = authoring.GetComponent<HPDisplay>();
             if (display != null)

@@ -1,5 +1,7 @@
 using Unity.Entities;
 
+// any entity with IsDead gets destroyed
+
 public partial class DeathSystem : SystemBase
 {
     protected override void OnUpdate()

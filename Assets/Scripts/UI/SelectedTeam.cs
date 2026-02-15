@@ -1,3 +1,6 @@
+
+//super simple memory between scenes
+
 public static class SelectedTeam
 {
     public static int EnemyTeamIndex = 0;

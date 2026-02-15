@@ -1,6 +1,8 @@
 using Unity.Entities;
 
-// Keep components data only — no methods
+// Keep ecs/components data only — no methods
+// each struct is a component that lives on an entity
+// systems read/write these to make the simulation work
 
 public struct TeamTag : IComponentData { public int Value; }
 public struct HP : IComponentData { public float Value; public float Max; }

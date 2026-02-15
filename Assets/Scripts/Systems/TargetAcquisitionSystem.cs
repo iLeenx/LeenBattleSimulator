@@ -2,11 +2,18 @@ using Unity.Entities;
 using Unity.Collections;
 using Unity.Mathematics;
 
+// picks targets - if target dies clear it and pick a new one
+
 [UpdateInGroup(typeof(SimulationSystemGroup))]
 public partial class TargetAcquisitionSystem : SystemBase
 {
     protected override void OnUpdate()
     {
+        // build lists of alive entities for each  team
+        // then each attacker picks a random enemy from the other team
+
+        // currently designed for 2 sides
+
         uint seed = (uint)SystemAPI.Time.ElapsedTime.GetHashCode() + 1;
         var rand = new Unity.Mathematics.Random(seed);
 

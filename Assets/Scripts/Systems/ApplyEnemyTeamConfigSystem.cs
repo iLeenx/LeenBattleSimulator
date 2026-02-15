@@ -2,6 +2,11 @@ using Unity.Entities;
 using Unity.Collections;
 using UnityEngine;
 
+// applies the selected TeamConfig to the enemy units
+// main menu picks the enemy team preset (like Team 7)
+// in battle scene, enemy units are still TeamTag=1 (enemy side)
+// but their stats (HP/Attack/etc) are replaced from the selected config
+
 public partial class ApplyEnemyTeamConfigSystem : SystemBase
 {
     private bool applied = false;
@@ -10,11 +15,11 @@ public partial class ApplyEnemyTeamConfigSystem : SystemBase
     {
         if (applied) return;
 
-        // Find a provider in scene
+        // Find a provider in scene that has the enemy team configs
         var provider = Object.FindFirstObjectByType<TeamConfigProvider>();
         if (provider == null || provider.enemyTeams == null || provider.enemyTeams.Count == 0)
         {
-            // No provider yet, keep trying
+            // if you don't find it keep trying
             return;
         }
 
@@ -41,10 +46,10 @@ public partial class ApplyEnemyTeamConfigSystem : SystemBase
 
         using var entities = query.ToEntityArray(Allocator.Temp);
 
-        // If entities aren't baked/ready yet, don't lock applied=true
+        // If entities aren't baked/ready yet, don't lock applied = true
         if (entities.Length == 0)
         {
-            // Debug.Log("ApplyEnemyTeamConfigSystem: no entities yet, waiting...");
+            // Debug.Log("ApplyEnemyTeamConfigSystem: no entities yet");
             return;
         }
 
@@ -57,7 +62,7 @@ public partial class ApplyEnemyTeamConfigSystem : SystemBase
 
         bool anyApplied = false;
 
-        // Optional: one-time header log per attempt
+        // one-time header log per attempt
         Debug.Log($"ApplyEnemyTeamConfigSystem: trying apply TeamId={config.TeamId} (selected index={idx}), entities={entities.Length}, configUnits={config.Units.Count}");
 
         for (int i = 0; i < entities.Length; i++)
@@ -105,12 +110,12 @@ public partial class ApplyEnemyTeamConfigSystem : SystemBase
         }
         else
         {
-            // Keep trying next frame (maybe team entities not ready/matching yet)
+            // Keep trying (maybe team entities not ready/matching yet)
             Debug.LogWarning("ApplyEnemyTeamConfigSystem: applied to 0 enemies this frame. Will retry.");
         }
     }
 
-    // Call this from BattleUIController.Awake() if you want a hard reset per battle load
+    // Call this from BattleUIController.Awake() for hard reset before battle load
     public void ResetApply()
     {
         applied = false;

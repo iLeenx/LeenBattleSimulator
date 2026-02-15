@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// builds the enemy team buttons from TeamConfig assets.
+// clicking a button sets SelectedTeam (index + teamId label).
+
 public class MainMenuTeamsUI : MonoBehaviour
 {
-    public List<TeamConfig> enemyTeams;      // drag your TeamConfig assets here
-    public Transform content;               // ScrollView/Viewport/Content
-    public Button buttonPrefab;             // a UI Button prefab
-    public TMP_Text selectedText;           // optional label
+    public List<TeamConfig> enemyTeams;
+    public Transform content;
+    public Button buttonPrefab;
+    public TMP_Text selectedText;
 
     void Start()
     {

@@ -2,6 +2,9 @@ using Unity.Entities;
 using Unity.Collections;
 using UnityEngine;
 
+// checks if only one team is still alive
+// reset this system when the battle scene loads again
+ 
 public partial class WinSystem : SystemBase
 {
     bool gameEnded = false;

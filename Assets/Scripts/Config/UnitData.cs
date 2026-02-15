@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// one unit stats inside a TeamConfig
+
 [System.Serializable]
 public class UnitData
 {
