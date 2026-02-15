@@ -6,6 +6,11 @@ public partial class WinSystem : SystemBase
 {
     bool gameEnded = false;
 
+    public void ResetWin()
+    {
+        gameEnded = false;
+    }
+
     protected override void OnUpdate()
     {
         if (gameEnded) return;
@@ -17,25 +22,22 @@ public partial class WinSystem : SystemBase
             ComponentType.Exclude<IsDead>()
         );
 
-        using var entities = query.ToEntityArray(Allocator.Temp);
+        using var units = query.ToEntityArray(Allocator.Temp);
+        if (units.Length == 0) return;
 
-        if (entities.Length == 0) return;
+        int survivingTeam = em.GetComponentData<TeamTag>(units[0]).Value;
 
-        int survivingTeam = em.GetComponentData<TeamTag>(entities[0]).Value;
-
-        for (int i = 1; i < entities.Length; i++)
+        for (int i = 1; i < units.Length; i++)
         {
-            int team = em.GetComponentData<TeamTag>(entities[i]).Value;
+            int team = em.GetComponentData<TeamTag>(units[i]).Value;
             if (team != survivingTeam)
                 return;
         }
 
         gameEnded = true;
-        Debug.Log($"TEAM {survivingTeam} WINS");
 
-        var ui = UnityEngine.Object.FindFirstObjectByType<BattleUIController>();
+        var ui = Object.FindFirstObjectByType<BattleUIController>();
         if (ui != null)
             ui.ShowWinner(survivingTeam);
-
     }
 }

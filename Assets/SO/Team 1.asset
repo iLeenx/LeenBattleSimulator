@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af9825d25ca421b47a4fda9282823eb9, type: 3}
+  m_Name: Team 1
+  m_EditorClassIdentifier: 
+  TeamId: 1
+  Units:
+  - MaxHP: 100
+    Attack: 10
+    AttackSpeed: 1
+    AttackRange: 1.5
+    MoveSpeed: 2
+    GridIndex: 0
+  - MaxHP: 100
+    Attack: 10
+    AttackSpeed: 1
+    AttackRange: 1.5
+    MoveSpeed: 2
+    GridIndex: 1
+  - MaxHP: 100
+    Attack: 10
+    AttackSpeed: 1
+    AttackRange: 1.5
+    MoveSpeed: 2
+    GridIndex: 2
+  - MaxHP: 100
+    Attack: 10
+    AttackSpeed: 1
+    AttackRange: 1.5
+    MoveSpeed: 2
+    GridIndex: 3
+  - MaxHP: 100
+    Attack: 10
+    AttackSpeed: 1
+    AttackRange: 1.5
+    MoveSpeed: 2
+    GridIndex: 4
