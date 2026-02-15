@@ -14,31 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TeamId: 2
   Units:
-  - MaxHP: 100
+  - MaxHP: 120
     Attack: 30
     AttackSpeed: 1
     AttackRange: 1.5
     MoveSpeed: 2
     GridIndex: 0
-  - MaxHP: 100
+  - MaxHP: 120
     Attack: 30
     AttackSpeed: 1
     AttackRange: 1.5
     MoveSpeed: 2
     GridIndex: 1
-  - MaxHP: 100
+  - MaxHP: 120
     Attack: 30
     AttackSpeed: 1
     AttackRange: 1.5
     MoveSpeed: 2
     GridIndex: 2
-  - MaxHP: 100
+  - MaxHP: 120
     Attack: 30
     AttackSpeed: 1
     AttackRange: 1.5
     MoveSpeed: 2
     GridIndex: 3
-  - MaxHP: 100
+  - MaxHP: 120
     Attack: 30
     AttackSpeed: 1
     AttackRange: 1.5
