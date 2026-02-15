@@ -28,6 +28,14 @@ public class UnitAuthoring : MonoBehaviour
             AddComponent(entity, new Target { Entity = Entity.Null });
             AddComponent(entity, new AttackTimer { Time = 0f });
             AddComponent(entity, new GridSlot { Index = authoring.GridIndex });
+
+            //AddComponentObject(entity, authoring.GetComponent<HPDisplay>());
+
+            var display = authoring.GetComponent<HPDisplay>();
+            if (display != null)
+            {
+                AddComponentObject(entity, display);
+            }
         }
     }
 }
