@@ -32,5 +32,10 @@ public partial class WinSystem : SystemBase
 
         gameEnded = true;
         Debug.Log($"TEAM {survivingTeam} WINS");
+
+        var ui = UnityEngine.Object.FindFirstObjectByType<BattleUIController>();
+        if (ui != null)
+            ui.ShowWinner(survivingTeam);
+
     }
 }
