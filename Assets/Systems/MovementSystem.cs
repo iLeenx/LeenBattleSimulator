@@ -1,53 +1,35 @@
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
-using Unity.Collections;
 
-[UpdateInGroup(typeof(SimulationSystemGroup))]
-public partial class MovementSystem : SystemBase
+public partial struct MovementSystem : ISystem
 {
-    protected override void OnUpdate()
+    public void OnUpdate(ref SystemState state)
     {
-        float dt = (float)SystemAPI.Time.DeltaTime;
+        float deltaTime = SystemAPI.Time.DeltaTime;
 
-        // Get a writable lookup (we will read/write LocalTransform for entities)
-        var localTransformLookup = GetComponentLookup<LocalTransform>(false);
-        localTransformLookup.Update(this);
-
-        new MovementJob
+        foreach (var (transform, speed, team, target)
+                 in SystemAPI.Query<
+                     RefRW<LocalTransform>,
+                     RefRO<MoveSpeed>,
+                     RefRO<TeamTag>,
+                     RefRO<Target>>())
         {
-            Dt = dt,
-            LocalTransformLookup = localTransformLookup
-        }.Run();
-    }
+            // If no target, don't move
+            if (target.ValueRO.Entity == Entity.Null)
+                continue;
 
-    partial struct MovementJob : IJobEntity
-    {
-        public float Dt;
-        public ComponentLookup<LocalTransform> LocalTransformLookup;
+            // Make sure target still exists
+            if (!SystemAPI.Exists(target.ValueRO.Entity))
+                continue;
 
-        // Note: we take Entity instead of ref LocalTransform to avoid aliasing
-        void Execute(Entity entity, in MoveSpeed ms, in AttackRange ar, in Target target)
-        {
-            if (target.Entity == Entity.Null) return;
-            if (!LocalTransformLookup.HasComponent(target.Entity)) return;
-            if (!LocalTransformLookup.HasComponent(entity)) return;
+            var targetTransform = SystemAPI.GetComponent<LocalTransform>(target.ValueRO.Entity);
 
-            var trans = LocalTransformLookup[entity];
-            var targetTrans = LocalTransformLookup[target.Entity];
+            float3 direction = math.normalize(
+                targetTransform.Position - transform.ValueRW.Position
+            );
 
-            float3 targetPos = targetTrans.Position;
-            float3 dir = targetPos - trans.Position;
-            float dist = math.length(dir);
-            if (dist > ar.Value)
-            {
-                float3 moveDir = math.normalize(dir);
-                float3 move = moveDir * ms.Value * Dt;
-                float maxMove = dist - ar.Value;
-                if (math.length(move) > maxMove) move = moveDir * maxMove;
-                trans = LocalTransform.FromPosition(trans.Position + move);
-                LocalTransformLookup[entity] = trans; // write back
-            }
+            transform.ValueRW.Position += direction * speed.ValueRO.Value * deltaTime;
         }
     }
 }
